@@ -1,5 +1,5 @@
 // ---------- Date (salvate în browser, fără server) ----------
-const LS = { produse: "ab_produse", comenzi: "ab_comenzi" };
+const LS = { produse: "ab_produse_v2", comenzi: "ab_comenzi_v2" };
 const $ = (s) => document.querySelector(s);
 const citeste = (k, def) => { try { return JSON.parse(localStorage.getItem(k)) || def; } catch { return def; } };
 const salveaza = () => {
@@ -9,22 +9,13 @@ const salveaza = () => {
     } catch { alert("Memoria browserului este plină. Folosește fotografii mai mici."); }
 };
 
-// Imagine de rezervă (cămașă desenată simplu) în culori de bej/maro
-function placeholder(culoare) {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
-    <rect width="300" height="400" fill="#e8dcc8"/>
-    <path d="M95 90 L125 75 Q150 100 175 75 L205 90 L245 135 L215 160 L200 145 V320 H100 V145 L85 160 L55 135 Z" fill="${culoare}"/>
-  </svg>`;
-    return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
-}
-
 let produse = citeste(LS.produse, null) || [
-    { id: 1, nume: "Cămașă din in", categorie: "Cămăși", pret: 289, stoc: 12, img: placeholder("#f6f0e6") },
-    { id: 2, nume: "Rochie midi", categorie: "Rochii", pret: 459, stoc: 6, img: placeholder("#8b6b4a") },
-    { id: 3, nume: "Pantaloni drepți", categorie: "Pantaloni", pret: 329, stoc: 3, img: placeholder("#cdb89a") },
-    { id: 4, nume: "Pulover tricotat", categorie: "Pulovere", pret: 369, stoc: 9, img: placeholder("#4a3426") },
-    { id: 5, nume: "Cămașă în dungi", categorie: "Cămăși", pret: 259, stoc: 0, img: placeholder("#d9c7a8") },
-    { id: 6, nume: "Rochie de seară", categorie: "Rochii", pret: 599, stoc: 4, img: placeholder("#6b4f38") },
+    { id: 1, nume: "Cămașă din in", categorie: "Cămăși", pret: 289, stoc: 12, img: "images/camasa-in.jpg" },
+    { id: 2, nume: "Rochie midi", categorie: "Rochii", pret: 459, stoc: 6, img: "images/rochie-midi.jpg" },
+    { id: 3, nume: "Pantaloni drepți", categorie: "Pantaloni", pret: 329, stoc: 3, img: "images/pantaloni-drepti.jpg" },
+    { id: 4, nume: "Pulover tricotat", categorie: "Pulovere", pret: 369, stoc: 9, img: "images/pulover-tricotat.jpg" },
+    { id: 5, nume: "Cămașă în dungi", categorie: "Cămăși", pret: 259, stoc: 0, img: "images/camasa-dungi.jpg" },
+    { id: 6, nume: "Rochie de seară", categorie: "Rochii", pret: 599, stoc: 4, img: "images/rochie-seara.jpg" },
 ];
 let comenzi = citeste(LS.comenzi, []);
 let albumCurent = "Toate";
@@ -109,7 +100,7 @@ $("#formProdus").onsubmit = async (e) => {
         categorie: f.get("categorie").trim(),
         pret: +f.get("pret"),
         stoc: +f.get("stoc"),
-        img: foto || placeholder("#cdb89a"),
+        img: foto,
     });
     e.target.reset();
     actualizeaza();
