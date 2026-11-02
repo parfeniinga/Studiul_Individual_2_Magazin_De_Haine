@@ -1,0 +1,1 @@
+# Studiul_Individual_2_Magazin_De_Haine
